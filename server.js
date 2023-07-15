@@ -60,7 +60,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/reg',async (req, res)=>{
     const newUser = req.body 
-    console.log(newUser)
     const usersData = fs.readFileSync('usersData.json')
     const parsedUsers = JSON.parse(usersData)
     parsedUsers.push(newUser) 
@@ -97,7 +96,6 @@ app.post('/auth', async (req, res)=>{
             refreshToken
         })
     } else {
-        console.log('Попытка авторизации несуществующего пользователя')
         res.send({
             message: 'Ошибка - пользователя с таким именем не существует'
         })
