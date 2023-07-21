@@ -81,7 +81,6 @@ app.post('/auth', async (req, res)=>{
         user.name === authUser.name
     )
     if(existedUser) {
-        console.log(existedUser, authUser, 'пользователь существует')
         if (existedUser.password !== authUser.password) {
             res.status = 200
             res.send({
@@ -99,9 +98,8 @@ app.post('/auth', async (req, res)=>{
             })
         }
     } else {
-        console.log('Ошибка - пользователя с таким именем не существует')
         res.send({
-            message: 'Ошибка - пользователя с таким именем не существует'
+            message: 'Ошибка: неверный логин или пароль'
         })
     }
 })
@@ -129,7 +127,7 @@ app.post('/check',async (req, res)=>{
         res.status = 200
         res.send({
             name: null,
-            password: null
+            password: null,
         })
     }
 })
