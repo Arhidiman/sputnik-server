@@ -37,7 +37,6 @@ const generateTokenPair = (data) => {
     }
 }
 
-
 app.use(cors({
     origin: originCors,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -52,11 +51,9 @@ app.post('/reg',async (req, res)=>{
     const usersData = fs.readFileSync('usersData.json')
     const parsedUsers = JSON.parse(usersData)
     const existedUser = parsedUsers.find((user)=>user.name === newUser.name)
-    console.log(existedUser)
     if(!existedUser) {
         parsedUsers.push(newUser) 
         const newData = JSON.stringify(parsedUsers)
-        console.log('Регистрация нового пользователя')
         fs.writeFileSync('usersData.json', newData)
         res.status = 200
         res.send({
@@ -65,7 +62,6 @@ app.post('/reg',async (req, res)=>{
             message: 'Новый пользователь зарегистрирован'
         })
     } else {
-        console.log('Имя занято')
         res.status = 200
         res.send({
             message: 'Пользователь с таким именем уже существует'
@@ -85,9 +81,7 @@ app.post('/auth', async (req, res)=>{
             res.status = 200
             res.send({
                 message: 'Ошибка - неверный пароль'
-            })
-            console.log('Неверный пароль')
-        } 
+            })        } 
         if (existedUser.password === authUser.password) {
             const { accessToken, refreshToken } = generateTokenPair({name: existedUser.name})
             res.status = 200
@@ -109,14 +103,11 @@ app.post('/check',async (req, res)=>{
     const usersData = fs.readFileSync('usersData.json')
     const parsedUsers = JSON.parse(usersData)
     const existedUser = parsedUsers.find((user)=>user.name === checkedUser.name)
-    console.log(checkedUser, existedUser)
     if (existedUser) {
-        console.log('user exists')
         if(existedUser.password === checkedUser.password) {
             res.status = 200
             res.send(existedUser)
         } else {
-            console.log('atata')
             res.status = 200
             res.send({
                 name: existedUser.name,
